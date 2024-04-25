@@ -7,14 +7,14 @@
 
 	create table musikaria(
 	idMusikaria int auto_increment primary key,
-	izenArtiztikoa varchar(30) not null unique,
+	izenArtistikoa varchar(30) not null unique,
 	irudia text,
 	ezaugarria ENUM('Bakarlaria', 'Taldea') not null 
 	);
 
 	create table podcaster(
 	idPodcaster int auto_increment primary key,
-	izenArtiztikoa varchar(30) not null unique,
+	izenArtistikoa varchar(30) not null unique,
 	irudia text
 	);
 
@@ -27,7 +27,7 @@
 
 	create table audioa(
 	idAudio int primary key auto_increment,
-	izena varchar(15) not null,
+	izena varchar(50) not null,
 	iraupena float not null,
 	irudia text,
 	mota ENUM('Abestia', 'Podcast'),
@@ -44,74 +44,73 @@
 	jaiotzeData date not null,
 	erregistroData date not null,
 	mota ENUM('Premium','Free'),
-	foreign key (hizkuntza) references hizkuntza(idHizkuntza) ON DELETE CASCADE ON UPDATE CASCADE
+	foreign key (hizkuntza) references hizkuntza(idHizkuntza) on delete set null on update cascade
 	);
 
 	create table premium(
-	idBezero int auto_increment primary key,
+	idBezero int primary key,
 	iraungitzeData date not null,
 	foreign key (idBezero) references bezero(idBezero) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table podcast(
 	idAudio int primary key,
-	kolaboratzaileak varchar(100),
-	idPodcaster varchar(5),
+	kolaboratzaileak varchar(50),
+	idPodcaster int,
 	foreign key (idAudio) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key (idPodcaster) references podcaster(idPodcaster) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table album(
 	idAlbum int auto_increment primary key,
-	izenburua varchar(25) not null,
+	izenburua varchar(50) not null,
 	urtea date not null,
-	generoa varchar(15) not null,
-	idMusikaria int auto_increment not null,
+	generoa varchar(30) not null,
+	idMusikaria int not null,
 	foreign key(idMusikaria) references musikaria(idMusikaria) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table abestia(
-	idAudio int auto_increment primary key,
-	idAlbum int auto_increment not null,
+	idAudio int primary key,
+	idAlbum int not null,
 	foreign key (idAudio) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key (idAlbum) references album(idAlbum) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table playlist(
 	idList int auto_increment primary key,
-	izenburua varchar(15) not null,
 	sorreraData date not null,
-	idBezero int auto_increment,
+	idBezero int,
 	foreign key (idBezero) references bezero(idBezero) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table playlistAbestiak(
-	idAudio int auto_increment,
-	idList int auto_increment,
+	idAudio int,
+	idList int,
+    primary key(idList, idAudio),
 	foreign key (idList) references playlist(idList) ON DELETE CASCADE ON UPDATE CASCADE,
-	foreign key (idAudio) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE,
-	primary key(idList, idAudio)
+	foreign key (idAudio) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table gustokoak(
-	idBezero int auto_increment ,
-	idAudio int auto_increment,
-	foreign key (idBezero) references bezero(idBezero),
-	foreign key (idAudio) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE,
-	primary key(idBezero, idAudio)
+	idBezero int ,
+	idAudio int,
+    primary key(idBezero, idAudio),
+	foreign key (idBezero) references bezero(idBezero)on delete  cascade on update cascade,
+	foreign key (idAudio) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table erreprodukzioak(
-	idBezero int auto_increment,
-	idAudioa int auto_increment,
+	idBezero int,
+	idAudioa int,
 	errepData datetime,
-	foreign key (idBezero) references bezero(idBezero),
-	foreign key (idAudioa) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE,
-	primary key(idBezero,idAudioa,errepData)
+	primary key(idBezero,idAudioa,errepData),
+	foreign key (idBezero) references bezero(idBezero) on delete cascade on update cascade,
+	foreign key (idAudioa) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
 	create table estatistikak(
-	idAudio int auto_increment primary key,
+	idAudio int primary key,
 	/*BETETZEKO*/
 	#1.
 	#2.
