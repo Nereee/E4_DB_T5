@@ -1,4 +1,4 @@
-	/*5 TALDEA*/
+/*5 TALDEA*/
 
 	drop database if exists db_spotify5;
 	create database db_spotify5 collate utf8_spanish2_ci;
@@ -9,7 +9,8 @@
 	idMusikaria int auto_increment primary key,
 	izenArtistikoa varchar(30) not null unique,
 	irudia longblob,
-	ezaugarria ENUM('Bakarlaria', 'Taldea') not null 
+	ezaugarria ENUM('Bakarlaria', 'Taldea') not null,
+    deskribapena varchar(1000)
 	);
 
 	create table podcaster(
