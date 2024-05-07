@@ -1,4 +1,4 @@
-	/*5 TALDEA*/
+/*5 TALDEA*/
 
 	drop database if exists db_spotify5;
 	create database db_spotify5 collate utf8_spanish2_ci;
@@ -8,14 +8,15 @@
 	create table musikaria(
 	idMusikaria int auto_increment primary key,
 	izenArtistikoa varchar(30) not null unique,
-	irudia text,
-	ezaugarria ENUM('Bakarlaria', 'Taldea') not null 
+	irudia longblob,
+	ezaugarria ENUM('Bakarlaria', 'Taldea') not null,
+    deskribapena varchar(1000)
 	);
 
 	create table podcaster(
 	idPodcaster int auto_increment primary key,
 	izenArtistikoa varchar(30) not null unique,
-	irudia text
+	irudia longblob
 	);
 
 	create table hizkuntza(
@@ -29,9 +30,8 @@
 	idAudio int primary key auto_increment,
 	izena varchar(50) not null,
 	iraupena float not null,
-	irudia text,
-	mota ENUM('Abestia', 'Podcast'),
-	mp3 blob not null
+	irudia longblob,
+	mota ENUM('Abestia', 'Podcast')
 	);
 
 	create table bezero(
@@ -64,7 +64,7 @@
 	create table album(
 	idAlbum int auto_increment primary key,
 	izenburua varchar(50) not null,
-	urtea date not null,
+	urtea int not null,
 	generoa varchar(30) not null,
 	idMusikaria int not null,
 	foreign key(idMusikaria) references musikaria(idMusikaria) ON DELETE CASCADE ON UPDATE CASCADE
