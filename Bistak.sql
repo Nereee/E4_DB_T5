@@ -33,3 +33,4 @@ group by bezero.idBezero, bezero.izena, bezero.abizena
 order by playlistKopurua desc;
 
 select * from playListErabiltzaile;
+SELECT * FROM db_spotify5.gustokoak;

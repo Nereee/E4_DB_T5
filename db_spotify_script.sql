@@ -16,7 +16,8 @@
 	create table podcaster(
 	idPodcaster int auto_increment primary key,
 	izenArtistikoa varchar(30) not null unique,
-	irudia longblob
+	irudia longblob,
+    deskribapena varchar(1000)
 	);
 
 	create table hizkuntza(
@@ -39,7 +40,7 @@
 	izena varchar(15) not null,
 	abizena varchar(15) not null,
 	hizkuntza ENUM('ES','EU','EN','FR','DE','CA','GA','AR'),
-	erabiltzailea varchar(25) not null,
+	erabiltzailea varchar(25) not null unique ,
 	pasahitza varchar(15) not null,
 	jaiotzeData date not null,
 	erregistroData date not null,
@@ -81,6 +82,7 @@
 	idList int auto_increment primary key,
 	sorreraData date not null,
 	idBezero int,
+    izena varchar(30),
 	foreign key (idBezero) references bezero(idBezero) ON DELETE CASCADE ON UPDATE CASCADE
 	);
 
@@ -108,7 +110,14 @@
 	foreign key (idBezero) references bezero(idBezero) on delete cascade on update cascade,
 	foreign key (idAudioa) references audioa(idAudio) ON DELETE CASCADE ON UPDATE CASCADE
 	);
-
+    
+    create table notifikatuGmailez(
+    idBezero int,
+    premiumMugaData date,
+    primary key(idBezero, premiumMugaData),
+    foreign key(idBezero) references bezero(idBezero) on Delete cascade on update cascade
+    );
+    
 	create table estatistikak(
 	idAudio int primary key,
 	/*BETETZEKO*/

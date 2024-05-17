@@ -88,7 +88,7 @@
 	grant select, insert on db_spotify5.premium to bezeroR;
     grant select, insert, delete on db_spotify5.gustokoak to bezeroR;
     grant select, insert, delete on db_spotify5.playlist to bezeroR;
-    grant select, insert, delete on db_spotify5.playlistabestiak to bezeroR;
+    grant select, insert, delete on db_spotify5.playlistAbestiak to bezeroR;
     
     drop user if exists bezero;
     create user bezero identified by 'bezPass';
